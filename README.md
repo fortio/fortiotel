@@ -7,7 +7,7 @@
 using golang 1.18+
 
 ```shell
-go install gitub.com/fortio/fortiotel@latest
+go install github.com/fortio/fortiotel@latest
 ```
 
 You can also download one of the many binary [releases](https://github.com/fortio/fortiotel/releases)
