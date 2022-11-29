@@ -17,12 +17,17 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 
 	"fortio.org/fortio/cli"
 	"fortio.org/fortio/fhttp"
 	"fortio.org/fortio/log"
 	"fortio.org/fortio/periodic"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
+	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 )
 
 // changeDefaults sets some flags to true by default instead of false.
@@ -38,12 +43,46 @@ func changeDefaults(flagNames []string) {
 	}
 }
 
+// Sort of inspired from
+// https://github.com/open-telemetry/opentelemetry-go/blob/main/exporters/otlp/otlptrace/otlptracehttp/example_test.go
+
+func installExportPipeline(ctx context.Context) (func(context.Context) error, error) {
+	// Insecure needed for jaeger otel grpc endpoint by default/using all-in-one.
+	// (and istio envoy will mtls secure it when not running local tests anyway)
+	client := otlptracegrpc.NewClient(otlptracegrpc.WithInsecure())
+	exporter, err := otlptrace.New(ctx, client)
+	if err != nil {
+		return nil, fmt.Errorf("creating OTLP trace exporter: %w", err)
+	}
+
+	tracerProvider := sdktrace.NewTracerProvider(
+		sdktrace.WithBatcher(exporter),
+	)
+	otel.SetTracerProvider(tracerProvider)
+
+	return tracerProvider.Shutdown, nil
+}
+
+var shutdown func(context.Context) error
+
 func hook(ho *fhttp.HTTPOptions, ro *periodic.RunnerOptions) {
-	ho.ClientTrace = otelhttptrace.NewClientTrace(context.Background())
+	ctx := context.Background()
+	ho.ClientTrace = otelhttptrace.NewClientTrace(ctx)
+	// Registers a tracer Provider globally.
+	var err error
+	shutdown, err = installExportPipeline(ctx)
+	if err != nil {
+		log.Fatalf("Error setting up export pipeline: %v", err)
+	}
+	log.Infof("OTEL export pipeline setup successfully")
 }
 
 func main() {
 	// Change a bunch of defaults to better ones "2.0" afforded by this being a new binary.
 	changeDefaults([]string{"stdclient", "nocatchup", "uniform", "a"})
 	cli.FortioMain(hook)
+	if err := shutdown(context.Background()); err != nil {
+		log.Fatalf("Error shutting down up export pipeline: %v", err)
+	}
+	log.Infof("OTEL export pipeline shut down successfully")
 }
