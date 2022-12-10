@@ -25,6 +25,10 @@ import (
 /*
  docker run -p 16686:16686 -p 4317:4317 jaegertracing/all-in-one:latest \
 --collector.otlp.enabled=true --collector.otlp.grpc.host-port=:4317
+
+# generate with
+
+OTEL_SERVICE_NAME=test go run .
 */
 
 func installExportPipeline(ctx context.Context) (func(context.Context) error, error) {
@@ -46,7 +50,6 @@ func installExportPipeline(ctx context.Context) (func(context.Context) error, er
 
 func main() {
 	ctx := context.Background()
-	clientTrace := otelhttptrace.NewClientTrace(ctx)
 	// Registers a tracer Provider globally.
 	shutdown, err := installExportPipeline(ctx)
 	if err != nil {
@@ -54,6 +57,8 @@ func main() {
 	}
 	log.Printf("OTEL export pipeline setup successfully")
 
+	ctx, span := otel.Tracer("github.com/fortio/fortiotel").Start(ctx, "main")
+	clientTrace := otelhttptrace.NewClientTrace(ctx)
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "http://www.google.com/", nil)
 	if err != nil {
 		log.Fatalf("Error creating request: %v", err)
@@ -68,6 +73,7 @@ func main() {
 		log.Fatalf("Error reading response body: %v", err)
 	}
 	_ = resp.Body.Close()
+	span.End()
 	if err := shutdown(context.Background()); err != nil {
 		log.Fatalf("Error shutting down up export pipeline: %v", err)
 	}
