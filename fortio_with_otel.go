@@ -18,6 +18,8 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"net/http/httptrace"
+	"time"
 
 	"fortio.org/fortio/cli"
 	"fortio.org/fortio/fhttp"
@@ -28,6 +30,7 @@ import (
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+	"go.opentelemetry.io/otel/trace"
 )
 
 // changeDefaults sets some flags to true by default instead of false.
@@ -65,9 +68,41 @@ func installExportPipeline(ctx context.Context) (func(context.Context) error, er
 
 var shutdown func(context.Context) error
 
+type OtelLogger struct {
+	tracer trace.Tracer
+}
+
+type OtelSpan struct {
+}
+
+// Before each Run().
+func (o *OtelLogger) Start(ctx context.Context, threadID periodic.ThreadID, iter int64, startTime time.Time) context.Context {
+	ctx, span := o.tracer.Start(ctx, fmt.Sprintf("run %d", threadID))
+	return context.WithValue(ctx, OtelSpan{}, span)
+}
+
+// Report logs a single request to a file.
+func (o *OtelLogger) Report(ctx context.Context, thread periodic.ThreadID, iter int64, startTime time.Time, latency float64, status bool, details string) {
+	span := ctx.Value(OtelSpan{}).(trace.Span)
+	span.End()
+}
+
+// Info is used to print information about the logger.
+func (o *OtelLogger) Info() string {
+	return "otel"
+}
+
+func CreateTrace(ctx context.Context) *httptrace.ClientTrace {
+	return otelhttptrace.NewClientTrace(ctx)
+}
+
 func hook(ho *fhttp.HTTPOptions, ro *periodic.RunnerOptions) {
 	ctx := context.Background()
-	ho.ClientTrace = otelhttptrace.NewClientTrace(ctx)
+	o := OtelLogger{
+		tracer: otel.Tracer("fortio.org/fortio"),
+	}
+	ro.AccessLogger = &o
+	ho.ClientTrace = CreateTrace
 	// Registers a tracer Provider globally.
 	var err error
 	shutdown, err = installExportPipeline(ctx)

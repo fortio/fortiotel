@@ -7,7 +7,7 @@
 using golang 1.18+
 
 ```shell
-go install github.com/fortio/fortiotel@latest
+go install fortio.org/fortiotel@latest
 ```
 
 You can also download one of the many binary [releases](https://github.com/fortio/fortiotel/releases)
@@ -23,13 +23,15 @@ docker run -p 16686:16686 -p 4317:4317 jaegertracing/all-in-one:latest --collect
 
 Run fortio server and then for instance:
 ```
-go run . load localhost:8080
+OTEL_SERVICE_NAME=fortio go run . load localhost:8080
 ```
 
-Get disjoint traces (for now): http://localhost:16686/search
+Get traces: http://localhost:16686/search
 
 # Documentation
 
-Loosely based on
+Initially loosely based on
 
 https://github.com/open-telemetry/opentelemetry-go-contrib/tree/main/instrumentation/net/http/httptrace/otelhttptrace
+
+(which doesn't work without an outer span setup first in the context, see [simple/](simple/))

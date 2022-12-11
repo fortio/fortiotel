@@ -56,7 +56,7 @@ func main() {
 		log.Fatalf("Error setting up export pipeline: %v", err)
 	}
 	log.Printf("OTEL export pipeline setup successfully")
-
+	// Without this the httptrace spans are disjoint.
 	ctx, span := otel.Tracer("github.com/fortio/fortiotel").Start(ctx, "main")
 	clientTrace := otelhttptrace.NewClientTrace(ctx)
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "http://www.google.com/", nil)

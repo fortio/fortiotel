@@ -79,7 +79,7 @@ brews:
 
     # Template of your app's description.
     # Default is empty.
-    description: "TLS ingress reverse proxy and multiplexer with autocert and simple routing rules"
+    description: "Fortio + open telemetry tracing"
 
     # SPDX identifier of your app's license.
     # Default is empty.
