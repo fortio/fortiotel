@@ -5,6 +5,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -49,17 +50,19 @@ func installExportPipeline(ctx context.Context) (func(context.Context) error, er
 }
 
 func main() {
+	url := flag.String("url", "http://www.google.com/", "URL to fetch")
+	flag.Parse()
 	ctx := context.Background()
 	// Registers a tracer Provider globally.
 	shutdown, err := installExportPipeline(ctx)
 	if err != nil {
 		log.Fatalf("Error setting up export pipeline: %v", err)
 	}
-	log.Printf("OTEL export pipeline setup successfully")
+	log.Printf("OTEL export pipeline setup successfully - making a single request to -url %s", *url)
 	// Without this the httptrace spans are disjoint.
 	ctx, span := otel.Tracer("github.com/fortio/fortiotel").Start(ctx, "main")
 	clientTrace := otelhttptrace.NewClientTrace(ctx)
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "http://www.google.com/", nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, *url, nil)
 	if err != nil {
 		log.Fatalf("Error creating request: %v", err)
 	}
