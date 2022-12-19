@@ -2,3 +2,4 @@
 *.json
 dist/
 fortiotel
+go.work.sum
