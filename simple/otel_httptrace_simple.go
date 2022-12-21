@@ -13,14 +13,21 @@ import (
 	"net/http/httptrace"
 
 	"go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
+	"go.opentelemetry.io/otel/propagation"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 )
 
 // Simplified version of
 // https://github.com/open-telemetry/opentelemetry-go/blob/main/exporters/otlp/otlptrace/otlptracehttp/example_test.go
+
+// +
+// https://github.com/open-telemetry/opentelemetry-go-contrib/blob/main/instrumentation/net/http/otelhttp/example/client/client.go
+// to get actual trace headers like
+// Traceparent: 00-6311bdab85facd517d5c032870fa7d13-d597dfa84926ad26-01
 
 // See traces using:
 /*
@@ -29,7 +36,7 @@ import (
 
 # generate with
 
-OTEL_SERVICE_NAME=test go run .
+OTEL_SERVICE_NAME=test go run . -url http://localhost:8080/ # with fortio server -loglevel debug running to see incoming headers
 */
 
 func installExportPipeline(ctx context.Context) (func(context.Context) error, error) {
@@ -45,6 +52,8 @@ func installExportPipeline(ctx context.Context) (func(context.Context) error, er
 		sdktrace.WithBatcher(exporter),
 	)
 	otel.SetTracerProvider(tracerProvider)
+	propagator := propagation.NewCompositeTextMapPropagator(propagation.Baggage{}, propagation.TraceContext{})
+	otel.SetTextMapPropagator(propagator) // key for getting headers
 
 	return tracerProvider.Shutdown, nil
 }
@@ -60,14 +69,22 @@ func main() {
 	}
 	log.Printf("OTEL export pipeline setup successfully - making a single request to -url %s", *url)
 	// Without this the httptrace spans are disjoint.
-	ctx, span := otel.Tracer("github.com/fortio/fortiotel").Start(ctx, "main")
+	tracer := otel.Tracer("github.com/fortio/fortiotel")
+	ctx, span := tracer.Start(ctx, "main")
 	clientTrace := otelhttptrace.NewClientTrace(ctx)
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, *url, nil)
 	if err != nil {
 		log.Fatalf("Error creating request: %v", err)
 	}
 	req = req.WithContext(httptrace.WithClientTrace(req.Context(), clientTrace))
-	resp, err := http.DefaultClient.Do(req)
+	// Create an http.Client that uses the (ot)http.Transport
+	// wrapped around the http.DefaultTransport - but headers are available through the propagator above.
+	// Unfortunately the http trace spans aren't nested in the http one...
+	// https://github.com/open-telemetry/opentelemetry-go-contrib/issues/399
+	cli := http.Client{
+		Transport: otelhttp.NewTransport(http.DefaultTransport),
+	}
+	resp, err := cli.Do(req)
 	if err != nil {
 		log.Fatalf("Error executing request: %v", err)
 	}
