@@ -32,12 +32,16 @@ import (
 
 // See traces using:
 /*
- docker run -p 16686:16686 -p 4317:4317 jaegertracing/all-in-one:latest \
---collector.otlp.enabled=true --collector.otlp.grpc.host-port=:4317
+ docker run -p 16686:16686 -p 4317:4317 jaegertracing/all-in-one:latest --collector.otlp.enabled=true
+# --collector.otlp.grpc.host-port=:4317 is not needed, it's the default
 
 # generate with
 
-OTEL_SERVICE_NAME=test go run . -url http://localhost:8080/ # with fortio server -loglevel debug running to see incoming headers
+OTEL_SERVICE_NAME=test go run . -url http://localhost:8080/ -b3 # with fortio server -loglevel debug running to see incoming headers
+
+For istio/jaeger in cluster:
+OTEL_EXPORTER_OTLP_ENDPOINT="http://jaeger-collector.istio-system.svc.cluster.local:4317"
+
 */
 
 var b3Flag = flag.Bool("b3", false, "Set to use b3 propagation instead of traceparent")
