@@ -14,6 +14,7 @@ import (
 
 	"go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
+	"go.opentelemetry.io/contrib/propagators/b3"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
@@ -39,6 +40,8 @@ import (
 OTEL_SERVICE_NAME=test go run . -url http://localhost:8080/ # with fortio server -loglevel debug running to see incoming headers
 */
 
+var b3Flag = flag.Bool("b3", false, "Set to use b3 propagation instead of traceparent")
+
 func installExportPipeline(ctx context.Context) (func(context.Context) error, error) {
 	// Insecure needed for jaeger otel grpc endpoint by default/using all-in-one.
 	// (and istio envoy will mtls secure it when not running local tests anyway)
@@ -52,7 +55,13 @@ func installExportPipeline(ctx context.Context) (func(context.Context) error, er
 		sdktrace.WithBatcher(exporter),
 	)
 	otel.SetTracerProvider(tracerProvider)
-	propagator := propagation.NewCompositeTextMapPropagator(propagation.Baggage{}, propagation.TraceContext{})
+	// Needed to get headers, either b3 or traceparent
+	var propagator propagation.TextMapPropagator
+	if *b3Flag {
+		propagator = b3.New(b3.WithInjectEncoding(b3.B3SingleHeader))
+	} else {
+		propagator = propagation.NewCompositeTextMapPropagator( /*propagation.Baggage{},*/ propagation.TraceContext{})
+	}
 	otel.SetTextMapPropagator(propagator) // key for getting headers
 
 	return tracerProvider.Shutdown, nil
