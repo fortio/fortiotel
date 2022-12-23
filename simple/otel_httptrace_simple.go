@@ -97,12 +97,14 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error executing request: %v", err)
 	}
-	_, err = io.ReadAll(resp.Body)
+	log.Printf("Response for %q: %v", *url, resp.Status)
+	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatalf("Error reading response body: %v", err)
 	}
 	_ = resp.Body.Close()
 	span.End()
+	log.Println(string(data))
 	if err := shutdown(context.Background()); err != nil {
 		log.Fatalf("Error shutting down up export pipeline: %v", err)
 	}
