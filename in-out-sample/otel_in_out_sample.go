@@ -12,6 +12,8 @@ import (
 	"log"
 	"net/http"
 	"net/http/httptrace"
+	"os"
+	"runtime/debug"
 
 	"go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
@@ -90,6 +92,10 @@ func main() {
 	if e != nil {
 		log.Fatalf("Error setting up export pipeline: %v", e)
 	}
+	binfo, _ := debug.ReadBuildInfo()
+	log.Printf(binfo.String())
+	log.Printf("OTEL_SERVICE_NAME=%s", os.Getenv("OTEL_SERVICE_NAME"))
+	log.Printf("OTEL_EXPORTER_OTLP_ENDPOINT=%s", os.Getenv("OTEL_EXPORTER_OTLP_ENDPOINT"))
 	log.Printf("OTEL export pipeline setup successfully - Starting sample server on -listen %s to forward to -url %s", *listen, *url)
 
 	// tracer := otel.Tracer("github.com/fortio/fortiotel")
