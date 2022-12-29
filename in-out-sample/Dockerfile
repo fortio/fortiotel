@@ -1,7 +1,7 @@
 FROM golang as build
 ARG VERSION=latest
 RUN go version
-RUN CGO_ENABLED=0 go install -a -ldflags -s github.com/fortio/fortiotel/in-out-sample@${VERSION}
+RUN CGO_ENABLED=0 go install -a -ldflags -s fortio.org/fortiotel/in-out-sample@${VERSION}
 FROM scratch
 COPY --from=build /go/bin/in-out-sample /usr/local/bin/
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
