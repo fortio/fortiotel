@@ -1,10 +1,9 @@
 FROM golang as build
-WORKDIR /build
-COPY . .
+ARG VERSION=latest
 RUN go version
-RUN CGO_ENABLED=0 go build -a -ldflags -s .
+RUN CGO_ENABLED=0 go install -a -ldflags -s github.com/fortio/fortiotel/in-out-sample@${VERSION}
 FROM scratch
-COPY --from=build /build/in-out-sample /usr/local/bin/
+COPY --from=build /go/bin/in-out-sample /usr/local/bin/
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 EXPOSE 8080
 ENV OTEL_SERVICE_NAME "in-out-sample"
