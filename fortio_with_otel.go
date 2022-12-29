@@ -42,12 +42,16 @@ func changeDefaults(flagNames []string) {
 			continue // not reached but linter doesn't know Fatalf panics/exists
 		}
 		f.DefValue = "true"
-		f.Value.Set("true")
+		err := f.Value.Set("true")
+		if err != nil {
+			log.Fatalf("error setting flag %s: %v", flagName, err)
+		}
 	}
 }
 
 // Sort of inspired from
 // https://github.com/open-telemetry/opentelemetry-go/blob/main/exporters/otlp/otlptrace/otlptracehttp/example_test.go
+// (see also simple/)
 
 func installExportPipeline(ctx context.Context) (func(context.Context) error, error) {
 	// Insecure needed for jaeger otel grpc endpoint by default/using all-in-one.
@@ -72,8 +76,7 @@ type OtelLogger struct {
 	tracer trace.Tracer
 }
 
-type OtelSpan struct {
-}
+type OtelSpan struct{}
 
 // Before each Run().
 func (o *OtelLogger) Start(ctx context.Context, threadID periodic.ThreadID, iter int64, startTime time.Time) context.Context {
@@ -82,7 +85,9 @@ func (o *OtelLogger) Start(ctx context.Context, threadID periodic.ThreadID, iter
 }
 
 // Report logs a single request to a file.
-func (o *OtelLogger) Report(ctx context.Context, thread periodic.ThreadID, iter int64, startTime time.Time, latency float64, status bool, details string) {
+func (o *OtelLogger) Report(ctx context.Context, thread periodic.ThreadID, iter int64,
+	startTime time.Time, latency float64, status bool, details string,
+) {
 	span := ctx.Value(OtelSpan{}).(trace.Span)
 	span.End()
 }
