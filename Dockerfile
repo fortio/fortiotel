@@ -1,7 +1,8 @@
+FROM alpine as alpine
+RUN apk update && apk add ca-certificates
 FROM scratch
 COPY fortiotel /usr/bin/fortio
-# Get CA certs (from goreleaser (ubuntu) build image)
-COPY /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=alpine /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 ENTRYPOINT ["/usr/bin/fortio"]
 EXPOSE 8080
 # Prom metrics exports/scrape
