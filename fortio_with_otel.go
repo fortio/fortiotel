@@ -18,6 +18,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"io"
 	"net/http/httptrace"
 	"time"
 
@@ -25,6 +26,7 @@ import (
 	"fortio.org/fortio/fhttp"
 	"fortio.org/fortio/log"
 	"fortio.org/fortio/periodic"
+	"fortio.org/fortio/version"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
@@ -114,13 +116,23 @@ func hook(ho *fhttp.HTTPOptions, ro *periodic.RunnerOptions) {
 	if err != nil {
 		log.Fatalf("Error setting up export pipeline: %v", err)
 	}
-	log.Infof("OTEL export pipeline setup successfully")
+	log.Infof("Fortio OTEL variant %s - export pipeline setup successfully", fotelVersion())
+}
+
+func fotelVersion() string {
+	short, _, _ := version.FromBuildInfo()
+	return short
+}
+
+func usage(w io.Writer, msgs ...interface{}) {
+	fmt.Fprintf(w, "Fortio OTEL variant %s - ", fotelVersion())
+	cli.Usage(w, msgs...)
 }
 
 func main() {
 	// Change a bunch of defaults to better ones "2.0" afforded by this being a new binary.
 	changeDefaults([]string{"stdclient", "nocatchup", "uniform", "a"})
-	cli.FortioMain(hook)
+	cli.FortioMain(usage, hook)
 	if err := shutdown(context.Background()); err != nil {
 		log.Fatalf("Error shutting down up export pipeline: %v", err)
 	}

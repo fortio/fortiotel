@@ -3,7 +3,7 @@ module fortio.org/fortiotel
 go 1.18
 
 require (
-	fortio.org/fortio v1.39.0-pre8
+	fortio.org/fortio v1.39.0-pre9
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.37.0
 	go.opentelemetry.io/otel v1.11.2
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.11.2
