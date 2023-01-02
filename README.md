@@ -1,4 +1,6 @@
-# Fortio experimental OTel = fortiotel
+# Fortiotel
+
+Fortio woth experimental OTel (Open Telemetry) = fortiotel
 
 [Fortio](https://github.com/fortio/fortio) but with experimental open telemetry tracing.
 
