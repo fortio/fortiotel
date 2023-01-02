@@ -19,6 +19,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"net/http"
 	"net/http/httptrace"
 	"time"
 
@@ -28,9 +29,12 @@ import (
 	"fortio.org/fortio/periodic"
 	"fortio.org/fortio/version"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
+	"go.opentelemetry.io/contrib/propagators/b3"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
+	"go.opentelemetry.io/otel/propagation"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -53,7 +57,12 @@ func changeDefaults(flagNames []string) {
 
 // Sort of inspired from
 // https://github.com/open-telemetry/opentelemetry-go/blob/main/exporters/otlp/otlptrace/otlptracehttp/example_test.go
-// (see also simple/)
+// (see also simple/ and https://github.com/fortio/otel-sample-app/)
+
+var (
+	b3SingleFlag = flag.Bool("b3single", false, "Set to use b3 single header propagation instead of traceparent")
+	b3MultiFlag  = flag.Bool("b3multi", true, "Set to use b3 multi header propagation instead of traceparent")
+)
 
 func installExportPipeline(ctx context.Context) (func(context.Context) error, error) {
 	// Insecure needed for jaeger otel grpc endpoint by default/using all-in-one.
@@ -68,6 +77,16 @@ func installExportPipeline(ctx context.Context) (func(context.Context) error, er
 		sdktrace.WithBatcher(exporter),
 	)
 	otel.SetTracerProvider(tracerProvider)
+	// Needed to get headers, either b3 or traceparent
+	var propagator propagation.TextMapPropagator
+	if *b3SingleFlag {
+		propagator = b3.New(b3.WithInjectEncoding(b3.B3SingleHeader))
+	} else if *b3MultiFlag {
+		propagator = b3.New(b3.WithInjectEncoding(b3.B3MultipleHeader))
+	} else {
+		propagator = propagation.NewCompositeTextMapPropagator( /*propagation.Baggage{},*/ propagation.TraceContext{})
+	}
+	otel.SetTextMapPropagator(propagator) // key for getting headers
 
 	return tracerProvider.Shutdown, nil
 }
@@ -103,6 +122,10 @@ func CreateTrace(ctx context.Context) *httptrace.ClientTrace {
 	return otelhttptrace.NewClientTrace(ctx)
 }
 
+func transportChain(t http.RoundTripper) http.RoundTripper {
+	return otelhttp.NewTransport(t)
+}
+
 func hook(ho *fhttp.HTTPOptions, ro *periodic.RunnerOptions) {
 	ctx := context.Background()
 	o := OtelLogger{
@@ -110,6 +133,7 @@ func hook(ho *fhttp.HTTPOptions, ro *periodic.RunnerOptions) {
 	}
 	ro.AccessLogger = &o
 	ho.ClientTrace = CreateTrace
+	ho.Transport = transportChain
 	// Registers a tracer Provider globally.
 	var err error
 	shutdown, err = installExportPipeline(ctx)
