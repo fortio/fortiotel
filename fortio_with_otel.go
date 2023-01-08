@@ -39,22 +39,6 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-// changeDefaults sets some flags to true by default instead of false.
-func changeDefaults(flagNames []string) {
-	for _, flagName := range flagNames {
-		f := flag.Lookup(flagName)
-		if f == nil {
-			log.Fatalf("flag %s not found", flagName)
-			continue // not reached but linter doesn't know Fatalf panics/exists
-		}
-		f.DefValue = "true"
-		err := f.Value.Set("true")
-		if err != nil {
-			log.Fatalf("error setting flag %s: %v", flagName, err)
-		}
-	}
-}
-
 // Sort of inspired from
 // https://github.com/open-telemetry/opentelemetry-go/blob/main/exporters/otlp/otlptrace/otlptracehttp/example_test.go
 // (see also simple/ and https://github.com/fortio/otel-sample-app/)
@@ -155,7 +139,7 @@ func usage(w io.Writer, msgs ...interface{}) {
 
 func main() {
 	// Change a bunch of defaults to better ones "2.0" afforded by this being a new binary.
-	changeDefaults([]string{"stdclient", "nocatchup", "uniform", "a"})
+	log.ChangeFlagsDefault("true", "stdclient", "nocatchup", "uniform", "a")
 	cli.FortioMain(usage, hook)
 	if err := shutdown(context.Background()); err != nil {
 		log.Fatalf("Error shutting down up export pipeline: %v", err)
