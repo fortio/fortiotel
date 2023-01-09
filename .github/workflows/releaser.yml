@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # pin@v3
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # pin@v3
         with:
           fetch-depth: 0
       - uses: docker/setup-qemu-action@27d0a4f181a40b142cce983c5393082c365d1480 # pin@v1
