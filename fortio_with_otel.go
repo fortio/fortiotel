@@ -139,7 +139,7 @@ func usage(w io.Writer, msgs ...interface{}) {
 
 func main() {
 	// Change a bunch of defaults to better ones "2.0" afforded by this being a new binary.
-	log.ChangeFlagsDefault("true", "stdclient", "nocatchup", "uniform", "a")
+	log.ChangeFlagsDefault("true", "stdclient", "nocatchup", "uniform", "a", "h2")
 	cli.FortioMain(usage, hook)
 	if err := shutdown(context.Background()); err != nil {
 		log.Fatalf("Error shutting down up export pipeline: %v", err)
