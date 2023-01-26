@@ -72,7 +72,7 @@ func installExportPipeline(ctx context.Context) (func(context.Context) error, er
 }
 
 func main() {
-	url := flag.String("url", "http://www.google.com/", "URL to fetch")
+	url := flag.String("url", "https://debug.fortio.org", "URL to fetch")
 	flag.Parse()
 	ctx := context.Background()
 	// Registers a tracer Provider globally.
