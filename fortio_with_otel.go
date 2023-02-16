@@ -23,11 +23,12 @@ import (
 	"net/http/httptrace"
 	"time"
 
+	"fortio.org/dflag/dynloglevel"
 	"fortio.org/fortio/cli"
 	"fortio.org/fortio/fhttp"
-	"fortio.org/fortio/log"
 	"fortio.org/fortio/periodic"
-	"fortio.org/fortio/version"
+	"fortio.org/log"
+	"fortio.org/version"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"go.opentelemetry.io/contrib/propagators/b3"
@@ -139,7 +140,7 @@ func usage(w io.Writer, msgs ...interface{}) {
 
 func main() {
 	// Change a bunch of defaults to better ones "2.0" afforded by this being a new binary.
-	log.ChangeFlagsDefault("true", "stdclient", "nocatchup", "uniform", "a", "h2")
+	dynloglevel.ChangeFlagsDefault("true", "stdclient", "nocatchup", "uniform", "a", "h2")
 	cli.FortioMain(usage, hook)
 	if err := shutdown(context.Background()); err != nil {
 		log.Fatalf("Error shutting down up export pipeline: %v", err)
