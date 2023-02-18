@@ -34,8 +34,8 @@ dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7
 fortio.org/assert v1.1.3 h1:zXm8xiNiKvq2xG/YQ3sONAg3287XUuklKIDdjyD9pyg=
 fortio.org/dflag v1.4.1 h1:WDhlHMh3yrQFrvspyN5YEyr8WATdKM2dUJlTxsjCDtI=
 fortio.org/dflag v1.4.1/go.mod h1:pTEF7UEj6sHP9rj9gZG2GyhAGrrPJE4c6zOO7zB2yyI=
-fortio.org/fortio v1.50.0 h1:ZCkTKADhlGyycUuv4aPENdl2t2UGX5kmy3bqYx2BNAQ=
-fortio.org/fortio v1.50.0/go.mod h1:ed1BLCuo6dn7lI46TpXpUUVTZsErhQNhyaAFVy45T2s=
+fortio.org/fortio v1.50.1 h1:5FSttAHQsyAsi3dzxDmSByfzDYByrWY/yw53bqOg+Kc=
+fortio.org/fortio v1.50.1/go.mod h1:TpAo6nixVbTxeIfE8F2c63D3ffouMTa+KDr9eFAYxys=
 fortio.org/log v1.2.2 h1:vs42JjNwiqbMbacittZjJE9+oi72Za6aekML9gKmILg=
 fortio.org/log v1.2.2/go.mod h1:u/8/2lyczXq52aT5Nw6reD+3cR6m/EbS2jBiIYhgiTU=
 fortio.org/version v1.0.2 h1:8NwxdX58aoeKx7T5xAPO0xlUu1Hpk42nRz5s6e6eKZ0=
@@ -415,8 +415,8 @@ google.golang.org/genproto v0.0.0-20200729003335-053ba62fc06f/go.mod h1:FWY/as6D
 google.golang.org/genproto v0.0.0-20200804131852-c06518451d9c/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
 google.golang.org/genproto v0.0.0-20200825200019-8632dd797987/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
 google.golang.org/genproto v0.0.0-20211118181313-81c1377c94b1/go.mod h1:5CzLGKJ67TSI2B9POpiiyGha0AjJvZIUgRMt1dSmuhc=
-google.golang.org/genproto v0.0.0-20230209215440-0dfe4f8abfcc h1:ijGwO+0vL2hJt5gaygqP2j6PfflOBrRot0IczKbmtio=
-google.golang.org/genproto v0.0.0-20230209215440-0dfe4f8abfcc/go.mod h1:RGgjbofJ8xD9Sq1VVhDM1Vok1vRONV+rg+CjzG4SZKM=
+google.golang.org/genproto v0.0.0-20230216225411-c8e22ba71e44 h1:EfLuoKW5WfkgVdDy7dTK8qSbH37AX5mj/MFh+bGPz14=
+google.golang.org/genproto v0.0.0-20230216225411-c8e22ba71e44/go.mod h1:8B0gmkoRebU8ukX6HP+4wrVQUY1+6PkQ44BSyIlflHA=
 google.golang.org/grpc v1.19.0/go.mod h1:mqu4LbDTu4XGKhr4mRzUsmM4RtVoemTSY81AxZiDr8c=
 google.golang.org/grpc v1.20.1/go.mod h1:10oTOabMzJvdu6/UiuZezV6QK5dSlG84ov/aaiqXj38=
 google.golang.org/grpc v1.21.1/go.mod h1:oYelfM1adQP15Ek0mdvEgi9Df8B9CZIaU1084ijfRaM=
