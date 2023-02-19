@@ -1,5 +1,8 @@
 // Repro basic issue with otelhttptrace
+// Without otelhttp
 // This generates 4 traces instead of 1 trace with all the spans
+// but even with it it's at best 4 disjoin spans
+// https://github.com/open-telemetry/opentelemetry-go-contrib/issues/399#issuecomment-1362174190
 
 package main
 
