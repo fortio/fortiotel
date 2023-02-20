@@ -18,17 +18,16 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"io"
 	"net/http"
 	"net/http/httptrace"
 	"time"
 
+	"fortio.org/cli"
 	"fortio.org/dflag/dynloglevel"
-	"fortio.org/fortio/cli"
+	fcli "fortio.org/fortio/cli"
 	"fortio.org/fortio/fhttp"
 	"fortio.org/fortio/periodic"
 	"fortio.org/log"
-	"fortio.org/version"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"go.opentelemetry.io/contrib/propagators/b3"
@@ -125,23 +124,14 @@ func hook(ho *fhttp.HTTPOptions, ro *periodic.RunnerOptions) {
 	if err != nil {
 		log.Fatalf("Error setting up export pipeline: %v", err)
 	}
-	log.Infof("Fortio OTEL variant %s - export pipeline setup successfully", fotelVersion())
-}
-
-func fotelVersion() string {
-	short, _, _ := version.FromBuildInfo()
-	return short
-}
-
-func usage(w io.Writer, msgs ...interface{}) {
-	fmt.Fprintf(w, "Fortio OTEL variant %s - ", fotelVersion())
-	cli.Usage(w, msgs...)
+	log.Infof("Fortio OTEL variant %s - export pipeline setup successfully", cli.ShortVersion)
 }
 
 func main() {
 	// Change a bunch of defaults to better ones "2.0" afforded by this being a new binary.
 	dynloglevel.ChangeFlagsDefault("true", "stdclient", "nocatchup", "uniform", "a", "h2")
-	cli.FortioMain(usage, hook)
+	cli.ProgramName = "Fortio OTEL variant"
+	fcli.FortioMain(hook)
 	if err := shutdown(context.Background()); err != nil {
 		log.Fatalf("Error shutting down up export pipeline: %v", err)
 	}
