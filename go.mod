@@ -3,7 +3,7 @@ module fortio.org/fortiotel
 go 1.18
 
 require (
-	fortio.org/dflag v1.4.1
+	fortio.org/dflag v1.4.2
 	fortio.org/fortio v1.50.1
 	fortio.org/log v1.2.2
 	fortio.org/version v1.0.2
