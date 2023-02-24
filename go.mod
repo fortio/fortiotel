@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	fortio.org/cli v1.1.0
-	fortio.org/dflag v1.4.2
+	fortio.org/dflag v1.5.1
 	fortio.org/fortio v1.51.0
 	fortio.org/log v1.2.2
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.39.0
@@ -22,6 +22,7 @@ require (
 
 require (
 	fortio.org/scli v1.1.0 // indirect
+	fortio.org/sets v1.0.0 // indirect
 	fortio.org/version v1.0.2 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.0 // indirect
 	github.com/felixge/httpsnoop v1.0.3 // indirect
