@@ -7,7 +7,7 @@ require (
 	fortio.org/dflag v1.5.2
 	fortio.org/fortio v1.52.0
 	fortio.org/log v1.3.0
-	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.39.0
+	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.40.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.39.0
 	go.opentelemetry.io/contrib/propagators/b3 v1.14.0
 	go.opentelemetry.io/otel v1.14.0
