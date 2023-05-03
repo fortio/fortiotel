@@ -8,7 +8,7 @@ require (
 	fortio.org/fortio v1.54.2
 	fortio.org/log v1.3.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.41.0
-	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.40.0
+	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.41.0
 	go.opentelemetry.io/contrib/propagators/b3 v1.15.0
 	go.opentelemetry.io/otel v1.15.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.14.0
@@ -33,7 +33,7 @@ require (
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.2 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/internal/retry v1.14.0 // indirect
-	go.opentelemetry.io/otel/metric v0.37.0 // indirect
+	go.opentelemetry.io/otel/metric v0.38.0 // indirect
 	go.opentelemetry.io/proto/otlp v0.19.0 // indirect
 	golang.org/x/exp v0.0.0-20230321023759-10a507213a29 // indirect
 	golang.org/x/net v0.9.0 // indirect
