@@ -32,6 +32,7 @@ import (
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"go.opentelemetry.io/contrib/propagators/b3"
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/propagation"
@@ -84,16 +85,23 @@ type OtelLogger struct {
 type OtelSpan struct{}
 
 // Before each Run().
-func (o *OtelLogger) Start(ctx context.Context, threadID periodic.ThreadID, iter int64, startTime time.Time) context.Context {
+func (o *OtelLogger) Start(ctx context.Context, threadID periodic.ThreadID, _ int64, _ time.Time) context.Context {
 	ctx, span := o.tracer.Start(ctx, fmt.Sprintf("run %d", threadID))
 	return context.WithValue(ctx, OtelSpan{}, span)
 }
 
 // Report logs a single request to a file.
-func (o *OtelLogger) Report(ctx context.Context, thread periodic.ThreadID, iter int64,
-	startTime time.Time, latency float64, status bool, details string,
+func (o *OtelLogger) Report(ctx context.Context, _ periodic.ThreadID, _ int64,
+	_ time.Time, _ float64, status bool, details string,
 ) {
 	span := ctx.Value(OtelSpan{}).(trace.Span)
+	if status {
+		// Success
+		span.SetStatus(codes.Ok, details)
+	} else {
+		// Error
+		span.SetStatus(codes.Error, details)
+	}
 	span.End()
 }
 
