@@ -110,14 +110,11 @@ func (o *OtelLogger) Info() string {
 	return "otel"
 }
 
-func CreateTrace(ctx context.Context) *httptrace.ClientTrace {
-	return otelhttptrace.NewClientTrace(ctx)
-}
-
 func transportChain(t http.RoundTripper) http.RoundTripper {
 	return otelhttp.NewTransport(
 		t,
 		otelhttp.WithClientTrace(func(ctx context.Context) *httptrace.ClientTrace {
+			// So it is nested. replaces ho.ClientTrace = otelhttptrace.NewClientTrace(ctx)
 			return otelhttptrace.NewClientTrace(ctx)
 		}),
 	)
@@ -129,7 +126,6 @@ func hook(ho *fhttp.HTTPOptions, ro *periodic.RunnerOptions) {
 		tracer: otel.Tracer("fortio.org/fortio"),
 	}
 	ro.AccessLogger = &o
-	ho.ClientTrace = CreateTrace
 	ho.Transport = transportChain
 	// Registers a tracer Provider globally.
 	var err error
