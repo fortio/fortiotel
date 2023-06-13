@@ -115,7 +115,12 @@ func CreateTrace(ctx context.Context) *httptrace.ClientTrace {
 }
 
 func transportChain(t http.RoundTripper) http.RoundTripper {
-	return otelhttp.NewTransport(t)
+	return otelhttp.NewTransport(
+		t,
+		otelhttp.WithClientTrace(func(ctx context.Context) *httptrace.ClientTrace {
+			return otelhttptrace.NewClientTrace(ctx)
+		}),
+	)
 }
 
 func hook(ho *fhttp.HTTPOptions, ro *periodic.RunnerOptions) {
