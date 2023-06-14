@@ -4,8 +4,7 @@ RUN apk update && apk add ca-certificates
 FROM scratch
 COPY fortiotel /usr/bin/fortio
 COPY --from=certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-# TODO: Prom metrics exports/scrape
-# EXPOSE 9102
+# Prom metrics are on the main port (8080) under /debug/metrics
 ENV OTEL_SERVICE_NAME "fortio"
 # Assumes you added --collector.otlp.enabled=true to your Jaeger deployment
 ENV OTEL_EXPORTER_OTLP_ENDPOINT http://jaeger-collector.istio-system.svc.cluster.local:4317
