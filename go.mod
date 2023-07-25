@@ -5,8 +5,8 @@ go 1.18
 require (
 	fortio.org/cli v1.2.0
 	fortio.org/dflag v1.5.2
-	fortio.org/fortio v1.57.3
-	fortio.org/log v1.7.0
+	fortio.org/fortio v1.57.4
+	fortio.org/log v1.8.1
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.42.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.42.0
 	go.opentelemetry.io/contrib/propagators/b3 v1.17.0
@@ -21,7 +21,7 @@ require (
 // replace fortio.org/fortio => ../fortio
 
 require (
-	fortio.org/scli v1.8.0 // indirect
+	fortio.org/scli v1.9.0 // indirect
 	fortio.org/sets v1.0.3 // indirect
 	fortio.org/version v1.0.2 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
@@ -35,7 +35,7 @@ require (
 	go.opentelemetry.io/otel/exporters/otlp/internal/retry v1.16.0 // indirect
 	go.opentelemetry.io/otel/metric v1.16.0 // indirect
 	go.opentelemetry.io/proto/otlp v0.20.0 // indirect
-	golang.org/x/exp v0.0.0-20230425010034-47ecfdc1ba53 // indirect
+	golang.org/x/exp v0.0.0-20230713183714-613f0c0eb8a1 // indirect
 	golang.org/x/net v0.12.0 // indirect
 	golang.org/x/sys v0.10.0 // indirect
 	golang.org/x/text v0.11.0 // indirect
