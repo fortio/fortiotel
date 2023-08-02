@@ -3,10 +3,10 @@ module fortio.org/fortiotel
 go 1.18
 
 require (
-	fortio.org/cli v1.2.0
+	fortio.org/cli v1.3.0
 	fortio.org/dflag v1.5.2
 	fortio.org/fortio v1.57.4
-	fortio.org/log v1.8.1
+	fortio.org/log v1.9.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.42.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.42.0
 	go.opentelemetry.io/contrib/propagators/b3 v1.17.0
