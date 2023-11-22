@@ -3,9 +3,9 @@ module fortio.org/fortiotel
 go 1.18
 
 require (
-	fortio.org/cli v1.5.0
+	fortio.org/cli v1.5.1
 	fortio.org/dflag v1.7.0
-	fortio.org/fortio v1.62.0
+	fortio.org/fortio v1.62.1
 	fortio.org/log v1.12.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.46.1
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.46.1
@@ -21,7 +21,7 @@ require (
 // replace fortio.org/fortio => ../fortio
 
 require (
-	fortio.org/scli v1.13.0 // indirect
+	fortio.org/scli v1.13.1 // indirect
 	fortio.org/sets v1.0.3 // indirect
 	fortio.org/struct2env v0.4.0 // indirect
 	fortio.org/version v1.0.3 // indirect
