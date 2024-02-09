@@ -20,7 +20,7 @@ jobs:
           check-latest: true
       - name: Run Vulncheck
         run: |
-          go install golang.org/x/vuln/cmd/govulncheck@master
+          go install golang.org/x/vuln/cmd/govulncheck@latest
           govulncheck ./...
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@3a919529898de77ec3da873e3063ca4b10e7f5cc # pin@v3

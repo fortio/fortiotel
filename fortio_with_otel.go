@@ -85,6 +85,8 @@ type OtelLogger struct {
 type OtelSpan struct{}
 
 // Before each Run().
+//
+//nolint:spancheck // Report() is called later by main fortio code to close the spans. (maybe check error cases though?)
 func (o *OtelLogger) Start(ctx context.Context, threadID periodic.ThreadID, _ int64, _ time.Time) context.Context {
 	ctx, span := o.tracer.Start(ctx, fmt.Sprintf("run %d", threadID))
 	return context.WithValue(ctx, OtelSpan{}, span)
