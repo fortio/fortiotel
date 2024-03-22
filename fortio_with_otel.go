@@ -64,11 +64,12 @@ func installExportPipeline(ctx context.Context) (func(context.Context) error, er
 	otel.SetTracerProvider(tracerProvider)
 	// Needed to get headers, either b3 or traceparent
 	var propagator propagation.TextMapPropagator
-	if *b3SingleFlag {
+	switch {
+	case *b3SingleFlag:
 		propagator = b3.New(b3.WithInjectEncoding(b3.B3SingleHeader))
-	} else if *b3MultiFlag {
+	case *b3MultiFlag:
 		propagator = b3.New(b3.WithInjectEncoding(b3.B3MultipleHeader))
-	} else {
+	default:
 		propagator = propagation.NewCompositeTextMapPropagator( /*propagation.Baggage{},*/ propagation.TraceContext{})
 	}
 	otel.SetTextMapPropagator(propagator) // key for getting headers
