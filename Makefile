@@ -1,5 +1,6 @@
 # See also github.com/fortio/otel-sample-app
 
+
 test:
 	go test -race ./...
 	go run -race . -version
@@ -22,3 +23,9 @@ stop-local-jaeger:
 race-test:
 	# Also crashes without -race
 	OTEL_SERVICE_NAME=race-test go run -race . load -n 40 -c 2 -qps -1 "http://localhost:8080/?delay=200ms"
+
+.golangci.yml: Makefile
+	curl -fsS -o .golangci.yml https://raw.githubusercontent.com/fortio/workflows/main/golangci.yml
+
+lint: .golangci.yml
+	golangci-lint run
