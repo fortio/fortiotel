@@ -18,7 +18,7 @@ jobs:
         uses: fortio/workflows/.github/workflows/codeql-analysis.yml@main
     call-releaser:
 #        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-        uses: fortio/workflows/.github/workflows/releaser.yml@common_setup
+        uses: fortio/workflows/.github/workflows/releaser.yml@main
         with:
             description: "Fortio + open telemetry tracing"
         secrets:
