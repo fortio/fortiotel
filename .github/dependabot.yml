@@ -9,6 +9,13 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+    groups:
+      "otel":
+        patterns:
+          - "go.opentelemetry.io/*"
+      "fortio":
+        patterns:
+          - "fortio.org/*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
