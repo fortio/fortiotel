@@ -1,6 +1,8 @@
 module fortio.org/fortiotel
 
-go 1.18
+go 1.21
+
+toolchain go1.22.3 // this shouldn't be necessary - see https://github.com/golang/go/issues/66175#issuecomment-2010343876
 
 require (
 	fortio.org/cli v1.5.2
