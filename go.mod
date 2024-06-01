@@ -5,7 +5,7 @@ go 1.18
 require (
 	fortio.org/cli v1.5.2
 	fortio.org/dflag v1.7.1
-	fortio.org/fortio v1.63.8
+	fortio.org/fortio v1.63.9
 	fortio.org/log v1.12.2
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.49.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.49.0
