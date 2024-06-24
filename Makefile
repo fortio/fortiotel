@@ -3,7 +3,7 @@
 
 test:
 	go test -race ./...
-	go run -race . -version
+	go run -race . version
 
 
 docker-test:
