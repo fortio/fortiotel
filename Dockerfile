@@ -1,9 +1,8 @@
 # Go releaser dockerfile
-FROM alpine as certs
-RUN apk update && apk add ca-certificates
 FROM scratch
 COPY fortiotel /usr/bin/fortio
-COPY --from=certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+# Not needed anymore since https://github.com/fortio/cli/releases/tag/v1.6.0
+# COPY --from=certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 # Prom metrics are on the main port (8080) under /debug/metrics
 ENV OTEL_SERVICE_NAME "fortio"
 # Assumes you added --collector.otlp.enabled=true to your Jaeger deployment
