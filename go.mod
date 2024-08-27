@@ -5,7 +5,7 @@ go 1.21
 // toolchain go1.22.5 // this shouldn't be necessary - see https://github.com/golang/go/issues/66175#issuecomment-2010343876
 
 require (
-	fortio.org/cli v1.8.0
+	fortio.org/cli v1.9.0
 	fortio.org/dflag v1.7.2
 	fortio.org/fortio v1.66.1
 	fortio.org/log v1.16.0
