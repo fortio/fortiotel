@@ -8,7 +8,7 @@ toolchain go1.22.5
 require (
 	fortio.org/cli v1.9.0
 	fortio.org/dflag v1.7.2
-	fortio.org/fortio v1.66.3
+	fortio.org/fortio v1.66.4
 	fortio.org/log v1.16.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.55.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.55.0
@@ -24,6 +24,7 @@ require (
 // replace fortio.org/fortio => ../fortio
 
 require (
+	fortio.org/safecast v0.1.1 // indirect
 	fortio.org/scli v1.15.2 // indirect
 	fortio.org/sets v1.2.0 // indirect
 	fortio.org/struct2env v0.4.1 // indirect
