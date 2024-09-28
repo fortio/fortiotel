@@ -1,14 +1,15 @@
 module fortio.org/fortiotel
 
-go 1.21
-toolchain go1.22.5
+go 1.22
+
+toolchain go1.22.7
 
 // toolchain go1.22.5 // this shouldn't be necessary - see https://github.com/golang/go/issues/66175#issuecomment-2010343876
 
 require (
 	fortio.org/cli v1.9.0
 	fortio.org/dflag v1.7.2
-	fortio.org/fortio v1.66.5
+	fortio.org/fortio v1.67.0
 	fortio.org/log v1.16.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.55.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.55.0
@@ -45,8 +46,9 @@ require (
 	golang.org/x/net v0.29.0 // indirect
 	golang.org/x/sys v0.25.0 // indirect
 	golang.org/x/text v0.18.0 // indirect
+	google.golang.org/genproto v0.0.0-20240924160255-9d4c2d233b61 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240903143218-8af14fe29dc1 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1 // indirect
-	google.golang.org/grpc v1.66.2 // indirect
+	google.golang.org/grpc v1.67.0 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 )
