@@ -1,7 +1,8 @@
 module fortio.org/fortiotel
 
-go 1.21
-toolchain go1.22.5
+go 1.22
+
+toolchain go1.22.7
 
 // toolchain go1.22.5 // this shouldn't be necessary - see https://github.com/golang/go/issues/66175#issuecomment-2010343876
 
