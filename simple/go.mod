@@ -2,7 +2,7 @@ module github.com/fortio/fortiotel/simple
 
 go 1.22
 
-toolchain go1.22.7
+toolchain go1.22.8
 
 require (
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.55.0
