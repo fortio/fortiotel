@@ -1,7 +1,6 @@
 module fortio.org/fortiotel
 
 go 1.22
-toolchain go1.24.1
 
 require (
 	fortio.org/cli v1.9.2
