@@ -130,7 +130,11 @@ func hook(ho *fhttp.HTTPOptions, ro *periodic.RunnerOptions) {
 	}
 	ro.AccessLogger = &o
 	ho.Transport = transportChain
-	// Registers a tracer Provider globally.
+	// Registers a tracer Provider globally. (once)
+	if shutdown != nil {
+		log.Infof("OTEL variant %s - export pipeline already set up, skipping", cli.ShortVersion)
+		return
+	}
 	var err error
 	shutdown, err = installExportPipeline(ctx)
 	if err != nil {
