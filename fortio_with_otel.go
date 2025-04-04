@@ -150,7 +150,7 @@ func main() {
 	fcli.FortioMain(hook)
 	if shutdown != nil {
 		if err := shutdown(context.Background()); err != nil {
-			log.Fatalf("Error shutting down up export pipeline: %v", err)
+			log.Fatalf("Error shutting down export pipeline: %v", err)
 		}
 	}
 	log.Infof("OTEL export pipeline shut down successfully")
