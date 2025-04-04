@@ -144,8 +144,10 @@ func main() {
 	dynloglevel.ChangeFlagsDefault("true", "stdclient", "nocatchup", "uniform", "a", "h2")
 	cli.ProgramName = "Fortio OTEL variant"
 	fcli.FortioMain(hook)
-	if err := shutdown(context.Background()); err != nil {
-		log.Fatalf("Error shutting down up export pipeline: %v", err)
+	if shutdown != nil {
+		if err := shutdown(context.Background()); err != nil {
+			log.Fatalf("Error shutting down up export pipeline: %v", err)
+		}
 	}
 	log.Infof("OTEL export pipeline shut down successfully")
 }
