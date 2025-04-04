@@ -130,7 +130,11 @@ func hook(ho *fhttp.HTTPOptions, ro *periodic.RunnerOptions) {
 	}
 	ro.AccessLogger = &o
 	ho.Transport = transportChain
-	// Registers a tracer Provider globally.
+	// Registers a tracer Provider globally. (once)
+	if shutdown != nil {
+		log.Infof("OTEL variant %s - export pipeline already set up, skipping", cli.ShortVersion)
+		return
+	}
 	var err error
 	shutdown, err = installExportPipeline(ctx)
 	if err != nil {
@@ -144,8 +148,10 @@ func main() {
 	dynloglevel.ChangeFlagsDefault("true", "stdclient", "nocatchup", "uniform", "a", "h2")
 	cli.ProgramName = "Fortio OTEL variant"
 	fcli.FortioMain(hook)
-	if err := shutdown(context.Background()); err != nil {
-		log.Fatalf("Error shutting down up export pipeline: %v", err)
+	if shutdown != nil {
+		if err := shutdown(context.Background()); err != nil {
+			log.Fatalf("Error shutting down export pipeline: %v", err)
+		}
 	}
 	log.Infof("OTEL export pipeline shut down successfully")
 }
