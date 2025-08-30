@@ -5,7 +5,7 @@ go 1.23.8
 require (
 	fortio.org/cli v1.10.0
 	fortio.org/dflag v1.8.1
-	fortio.org/fortio v1.71.1
+	fortio.org/fortio v1.71.2
 	fortio.org/log v1.17.2
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.62.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.62.0
@@ -21,11 +21,11 @@ require (
 // replace fortio.org/fortio => ../fortio
 
 require (
-	fortio.org/safecast v1.0.0 // indirect
+	fortio.org/safecast v1.2.0 // indirect
 	fortio.org/scli v1.16.1 // indirect
 	fortio.org/sets v1.3.0 // indirect
 	fortio.org/struct2env v0.4.2 // indirect
-	fortio.org/terminal v0.49.1 // indirect
+	fortio.org/terminal v0.52.0 // indirect
 	fortio.org/version v1.0.4 // indirect
 	github.com/bufbuild/protocompile v0.14.1 // indirect
 	github.com/cenkalti/backoff/v5 v5.0.2 // indirect
@@ -48,9 +48,9 @@ require (
 	golang.org/x/sys v0.35.0 // indirect
 	golang.org/x/term v0.34.0 // indirect
 	golang.org/x/text v0.28.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250603155806-513f23925822 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250603155806-513f23925822 // indirect
-	google.golang.org/grpc v1.74.2 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250707201910-8d1bb00bc6a7 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250707201910-8d1bb00bc6a7 // indirect
+	google.golang.org/grpc v1.75.0 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
-	grol.io/grol v0.91.9 // indirect
+	grol.io/grol v0.91.12 // indirect
 )
