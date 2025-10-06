@@ -3,10 +3,10 @@ module fortio.org/fortiotel
 go 1.23.8
 
 require (
-	fortio.org/cli v1.11.0
+	fortio.org/cli v1.12.1
 	fortio.org/dflag v1.9.2
 	fortio.org/fortio v1.72.0
-	fortio.org/log v1.17.2
+	fortio.org/log v1.18.1
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.63.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.63.0
 	go.opentelemetry.io/contrib/propagators/b3 v1.38.0
@@ -38,7 +38,7 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2 // indirect
 	github.com/jhump/protoreflect v1.17.0 // indirect
-	github.com/kortschak/goroutine v1.1.2 // indirect
+	github.com/kortschak/goroutine v1.1.3 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/otel/metric v1.38.0 // indirect
