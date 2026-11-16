@@ -5,7 +5,7 @@ go 1.26.0
 require (
 	fortio.org/cli v1.12.3
 	fortio.org/dflag v1.9.3
-	fortio.org/fortio v1.76.0
+	fortio.org/fortio v1.76.1
 	fortio.org/log v1.18.3
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.72.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.72.0
@@ -23,10 +23,10 @@ require (
 require (
 	fortio.org/duration v1.0.4 // indirect
 	fortio.org/safecast v1.2.0 // indirect
-	fortio.org/scli v1.19.0 // indirect
+	fortio.org/scli v1.20.0 // indirect
 	fortio.org/sets v1.3.0 // indirect
 	fortio.org/struct2env v0.4.2 // indirect
-	fortio.org/terminal v0.65.4 // indirect
+	fortio.org/terminal v0.66.0 // indirect
 	fortio.org/version v1.0.4 // indirect
 	github.com/cenkalti/backoff/v5 v5.0.3 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -38,8 +38,7 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.30.0 // indirect
 	github.com/jbuchbinder/gopnm v0.0.0-20220507095634-e31f54490ce0 // indirect
-	github.com/jhump/protoreflect v1.19.0 // indirect
-	github.com/jhump/protoreflect/v2 v2.0.0-beta.1 // indirect
+	github.com/jhump/protoreflect/v2 v2.0.0 // indirect
 	github.com/kortschak/goroutine v1.1.3 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
@@ -47,14 +46,14 @@ require (
 	go.opentelemetry.io/otel/metric v1.47.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.11.0 // indirect
 	golang.org/x/crypto/x509roots/fallback v0.0.0-20250406160420-959f8f3db0fb // indirect
-	golang.org/x/image v0.46.0 // indirect
+	golang.org/x/image v0.47.0 // indirect
 	golang.org/x/net v0.61.0 // indirect
-	golang.org/x/sys v0.49.0 // indirect
+	golang.org/x/sys v0.50.0 // indirect
 	golang.org/x/term v0.47.0 // indirect
 	golang.org/x/text v0.43.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20260928230214-8a89bd6388cc // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260928230214-8a89bd6388cc // indirect
-	google.golang.org/grpc v1.84.0 // indirect
+	google.golang.org/grpc v1.85.0 // indirect
 	google.golang.org/protobuf v1.36.12 // indirect
-	grol.io/grol v0.101.4 // indirect
+	grol.io/grol v0.102.1 // indirect
 )
