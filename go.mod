@@ -5,7 +5,7 @@ go 1.26.0
 require (
 	fortio.org/cli v1.12.3
 	fortio.org/dflag v1.9.3
-	fortio.org/fortio v1.76.1
+	fortio.org/fortio v1.77.0
 	fortio.org/log v1.18.3
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.72.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.72.0
@@ -23,7 +23,7 @@ require (
 require (
 	fortio.org/duration v1.0.4 // indirect
 	fortio.org/safecast v1.2.0 // indirect
-	fortio.org/scli v1.20.0 // indirect
+	fortio.org/scli v1.21.0 // indirect
 	fortio.org/sets v1.3.0 // indirect
 	fortio.org/struct2env v0.4.2 // indirect
 	fortio.org/terminal v0.66.0 // indirect
@@ -38,7 +38,7 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.30.0 // indirect
 	github.com/jbuchbinder/gopnm v0.0.0-20220507095634-e31f54490ce0 // indirect
-	github.com/jhump/protoreflect/v2 v2.0.0 // indirect
+	github.com/jhump/protoreflect/v2 v2.0.1 // indirect
 	github.com/kortschak/goroutine v1.1.3 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
